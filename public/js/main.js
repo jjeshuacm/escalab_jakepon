@@ -70,7 +70,8 @@ class Character{
         // lifebar.style.width = `${(this.life / this.maxLife) * 100}%`;
     }
 
-    drawOption(){
+    drawOption(players){
+        // const lifebar = document.getElementById(id);
         //cambiar imagen segun personaje
     }
     //validar solo las 3 opciones no los main
@@ -122,9 +123,9 @@ class Player extends Character{
         console.log(this.name+" "+action);
         let amountPoint = this.actionType2[action];
 
-        // const lifebar = document.getElementById(id);
-
-        return amountPoint;
+        return [action, amountPoint, this.user];
+        // let main1Option = this.drawOption(this.user);
+        // return amountPoint;
     }
 
 }
@@ -144,13 +145,22 @@ class Computer extends Character{
         //puntos por cada opcion configurables segun la elegida
         //enviar valor a restar para cada opcion dinamica
         //filter? buscar en array
- 
+        // console.log(j);
         let pointAttack = this.actionType2[j];
-      
+        console.log(pointAttack);
         let damage = 0;
         damage =   this.doAttack( this.maxPoint);
-        return damage;
+        // let main1Option = this.drawOption(this.user);
 
+        return [j, damage, this.user];
+        // return damage;
+        // console.log(pointAttack);
+      
+        //    if (action === 'heal' && this.life === this.maxLife) action = 'strong';
+     
+
+       
+    }
 }
 
 
