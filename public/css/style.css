@@ -1,69 +1,148 @@
-body {
+html {
+  min-height: 100%;
+}
+
+html body {
   padding: 0px;
   margin: 0px;
+  min-height: 100vh;
+  color: blue;
+  font-size: 24px;
 }
 
-body .container {
+html body .container {
+  outline: 1px solid red;
+  width: 100%;
   display: -ms-grid;
   display: grid;
-      grid-template-areas: "head head head" "mainHead  mainHead rightSide" "main main rightSide" "mainfooter mainfooter rightSide" "footer footer footer";
-  -ms-grid-columns: auto 70% auto;
-      grid-template-columns: auto 70% auto;
-  -ms-grid-rows: 50px 30px 390px 30px 50px;
-      grid-template-rows: 50px 30px 390px 30px 50px;
+      grid-template-areas: "head head head" "mainHead  mainHead rightSide" "main1 main2 rightSide" "footer footer footer";
+  -ms-grid-columns: 40% 40% auto;
+      grid-template-columns: 40% 40% auto;
+  -ms-grid-rows: 40px 70px 390px 30px;
+      grid-template-rows: 40px 70px 390px 30px;
 }
 
-body .container div {
+html body .container div {
   border: 1px solid black;
 }
 
-@media (max-width: 1200px) {
-  body .container {
-    -ms-grid-columns: auto;
-        grid-template-columns: auto;
-        grid-template-areas: "head" "mainHead" "main" "mainfooter" "rightSide" "footer";
-  }
+html body .container .mainHead .btnAction, html body .container .mainHead .btnAction--rock, html body .container .mainHead .btnAction--paper, html body .container .mainHead .btnAction--scissors, html body .container .mainHead .btnAction--main1, html body .container .mainHead .btnAction--main2 {
+  display: inline-block;
+  height: 100%;
+  width: 70px;
 }
 
-body .head {
+html body .container .mainHead .btnAction--rock {
+  background-image: url("../img/piedra.svg");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+html body .container .mainHead .btnAction--paper {
+  background-image: url("../img/papel.svg");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+html body .container .mainHead .btnAction--scissors {
+  background-image: url("../img/tijera.svg");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+html body .container .mainHead .btnAction--main1 {
+  background-image: url("../img/estudiante.png");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+html body .container .mainHead .btnAction--main2 {
+  background-image: url("../img/fantasma.png");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  float: right;
+}
+
+html body .container .btnOption, html body .container .btnOption--main1, html body .container .btnOption--main2 {
+  display: inline-block;
+  height: 150px;
+  width: 170px;
+}
+
+html body .container .btnOption--main1 {
+  background-image: url("../img/interrogacion.png");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+html body .container .btnOption--main2 {
+  background-image: url("../img/interrogacion.png");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+html body .container .head {
   -ms-grid-row: 1;
   -ms-grid-column: 1;
   -ms-grid-column-span: 3;
   grid-area: head;
 }
 
-body .mainHead {
+html body .container .mainHead {
   -ms-grid-row: 2;
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-area: mainHead;
 }
 
-body .main {
+html body .container .main1 {
   -ms-grid-row: 3;
   -ms-grid-column: 1;
-  -ms-grid-column-span: 2;
-  grid-area: main;
+  grid-area: main1;
 }
 
-body .mainfooter {
-  -ms-grid-row: 4;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 2;
-  grid-area: mainfooter;
+html body .container .main2 {
+  -ms-grid-row: 3;
+  -ms-grid-column: 2;
+  grid-area: main2;
 }
 
-body .rightSide {
+html body .container .rightSide {
   -ms-grid-row: 2;
-  -ms-grid-row-span: 3;
+  -ms-grid-row-span: 2;
   -ms-grid-column: 3;
   grid-area: rightSide;
 }
 
-body .footer {
-  -ms-grid-row: 5;
+html body .container .footer {
+  -ms-grid-row: 4;
   -ms-grid-column: 1;
   -ms-grid-column-span: 3;
   grid-area: footer;
+}
+
+@media (max-width: 1200px) {
+  html body .container {
+    -ms-grid-columns: auto auto;
+        grid-template-columns: auto auto;
+    -ms-grid-rows: 50px 70px 390px 50px 50px;
+        grid-template-rows: 50px 70px 390px 50px 50px;
+        grid-template-areas: "head head" "mainHead mainHead" "main1 main2" "rightSide rightSide" "footer footer";
+  }
+}
+
+@media (max-width: 388px) {
+  html body .btnAction, html body .container .mainHead .btnAction--rock, html body .container .mainHead .btnAction--paper, html body .container .mainHead .btnAction--scissors, html body .container .mainHead .btnAction--main1, html body .container .mainHead .btnAction--main2 {
+    display: inline-block;
+    height: 100%;
+    width: 18%;
+  }
 }
 /*# sourceMappingURL=style.css.map */

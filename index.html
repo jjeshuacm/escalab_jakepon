@@ -5,21 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piedra, Papel o Tijera</title>
-    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="./public/css/style.css">
+    
 </head>
 <body>
     <div class="container">
 
-        <div class="head">head</div>
-      
+        <div class="head">JAN-KEN-PON: seleccionar</div>
+            <div class="mainHead">
+                <div id="main1"  class="btnAction btnAction--main1"></div>
+                <div id="rock"   class="btnAction btnAction--rock" ></div>
+                <div id="paper"  class="btnAction btnAction--paper" ></div>
+                <div id="scissors"  class="btnAction btnAction--scissors" ></div> 
+                <div id="main2"  class="btnAction btnAction--main2"></div>   
+            </div>
+            <div class="main1">
+                <div>Jugador 1: 
+                    <strong id="total">0</strong> <strong id="totalSum">+ 100</strong>
+                </div>
+                <div id="main1" class="btnOption btnOption--main1"></div>
+            </div>
+            <div class="main2">
+                <div>IA: <strong>- 30</strong></div>
+                <div id="main2" class="btnOption btnOption--main2"></div>
+            </div>
 
-            <div class="mainHead">main head</div>
-            <div class="main">main</div>
-            <div class="mainfooter">mainfooter</div>
-
-        <div class="rightSide">rigth sider</div>
+        <div class="rightSide">Puntaje</div>
         <div class="footer">footer</div>
 
     </div>
+<script src="./public/js/main.js"></script>
 </body>
 </html>

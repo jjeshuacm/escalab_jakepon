@@ -1,57 +1,131 @@
+//impor style menu
 @import "menu";
-$borde: 1px solid black;
 
-$grid-row:  50px 30px 390px 30px 50px;
-$grid-columns: auto 70% auto;
-$grid-areas:'head head head'
-            'mainHead  mainHead rightSide'
-            'main main rightSide'
-            'mainfooter mainfooter rightSide'
-            'footer footer footer';
-
-$grid-template-areas-1200:  'head'
-                            'mainHead'
-                            'main'
-                            'mainfooter'
-                            'rightSide'
-                            'footer';
-$grid-template-columns-1200: auto;
-            
-body{
-
-    padding: 0px;
+//mixin = funcion css //parametre
+@mixin funtionStyle($color,$fontSize){
+    padding: 0px; 
     margin: 0px;
-    
-    .container{
-        display: grid;
-        grid-template-areas: $grid-areas;
-        grid-template-columns: $grid-columns;
-        grid-template-rows: $grid-row;
-        div{ 
-            border: $borde;
-        }
+    min-height: 100vh;
+    color: $color;
+    font-size: $fontSize;
+}
+//mixin image background
+@mixin background($imgpath,$position:0 0,$repeat: no-repeat) {
+    background: {
+        image: url($imgpath);
+        position: $position;
+        repeat: $repeat;
+        size: contain;
     }
-    
-    @media ( max-width: 1200px ) {  
-            .container { 
-                grid-template-columns: $grid-template-columns-1200;
-                grid-template-areas: $grid-template-areas-1200;
-            }
-        }
-
-
-
-    .head{ grid-area: head;}
-    .mainHead{ grid-area: mainHead; }
-    .main{ grid-area: main; }
-    .mainfooter{ grid-area: mainfooter; }
-    .rightSide{ grid-area: rightSide; }
-    .footer{ grid-area: footer; }
-
-
 }
 
+//var
+$borde: 1px solid black;
+//var grid generic
+$grid-row:  40px 70px 390px 30px;
+$grid-columns: 40% 40% auto;
+$grid-areas:'head head head'
+            'mainHead  mainHead rightSide'
+            'main1 main2 rightSide'
+            'footer footer footer';
+
+//var grid media query 
+$gridRow1200:   50px 70px 390px 50px 50px;  
+$gridColumns1200: auto auto;
+$gridAreas1200:  'head head'
+                'mainHead mainHead'
+                'main1 main2'
+                'rightSide rightSide'
+                'footer footer';
+//img mainHead
+$rockImg: '../img/piedra.svg';
+$paperImg: '../img/papel.svg';
+$scissorsImg: '../img/tijera.svg';
+$main1Img: '../img/estudiante.png';
+$main2Img: '../img/fantasma.png';
+$mainOpt: '../img/interrogacion.png';
 
 
+//NESTING { { {} } }
+html {   
+min-height: 100%;
 
+    body{
+        //include all style function
+        @include funtionStyle(blue, 24px);
+            .container{
+                outline: 1px solid red;
+                width: 100%;
+                display: grid;
+                grid-template-areas: $grid-areas;
+                grid-template-columns: $grid-columns;
+                grid-template-rows: $grid-row;
 
+                    div{  border: $borde; }
+                    //mainHead
+                    //action btn Rock-paper-scissors
+                    .mainHead{
+                        
+                        .btnAction{
+                            display: inline-block;
+                            height: 100%;
+                            width: 70px;
+                            //extend css 
+                            //add css from btnaction to --rock
+                            &--rock {  @extend .btnAction; @include background($rockImg);}
+                            &--paper { @extend .btnAction; @include background($paperImg);}
+                            &--scissors { @extend .btnAction; @include background($scissorsImg); }
+                            &--main1 { @extend .btnAction; @include background($main1Img);}
+                            &--main2 { @extend .btnAction; @include background($main2Img);float: right;}
+                        }
+                    }
+
+                    //     display: flex;
+                    //     justify-content: center;
+                    //     align-items: center;
+                    // }
+                    // .main2{  
+                    //     display: flex;
+                    //     justify-content: center;
+                    //     align-items: center;
+                    // }   .main1{  
+                 
+                        .btnOption{
+                            display: inline-block;
+                            height: 150px;
+                            width: 170px;
+                          
+                            &--main1 {  @extend .btnOption; @include background($mainOpt);}
+                            &--main2 {  @extend .btnOption; @include background($mainOpt);}
+                        }
+                   
+
+                    //grid area
+                    .head{ grid-area: head;}
+                    .mainHead{ grid-area: mainHead; }
+                    .main1{ grid-area: main1; }
+                    .main2{ grid-area: main2; }
+                    .rightSide{ grid-area: rightSide; }
+                    .footer{ grid-area: footer; }  
+            }
+
+        
+
+        //media query max 1200
+        @media ( max-width: 1200px ) {  
+            .container { 
+                grid-template-columns: $gridColumns1200;
+                grid-template-rows: $gridRow1200;
+                grid-template-areas: $gridAreas1200;    
+            }
+        }
+         //media query max 388
+        @media ( max-width: 388px ) {  
+            .btnAction{
+                display: inline-block;
+                height: 100%;
+                width: 18%;
+            }
+        }
+    }
+}
