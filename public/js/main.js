@@ -22,11 +22,12 @@ class Game{
         // else if (this.shifts.getLife() === 0) alert('ganaste');
     }
     //turnos del juego 
-    doTurn(action){
+    doTurn(action){ 
             //ejecutar accion del jugador
             const playerAction = this.player.doAction(action);
             //ejecutar accion del enemigo
             const computerAction = this.computer.doAction();
+            
             //opciones 
             const calpoint = this.player.calPoint(playerAction)
             const calpoint2 = this.computer.calPoint(computerAction)
@@ -61,8 +62,11 @@ class Character{
         // recibir y modificar sus propios parametros al instanciar 
     }
     //calcular
-    calPoint(cantidad=0, character=0){
+    calPoint([option,damage,user]){
+        console.log(option,damage,user);
 //pintar()
+        // this.drawPoint(option,user);
+        this.drawOption(option,user);
     }
 //pintar
     drawPoint(jugador) {
@@ -70,8 +74,11 @@ class Character{
         // lifebar.style.width = `${(this.life / this.maxLife) * 100}%`;
     }
 
-    drawOption(players){
-        // const lifebar = document.getElementById(id);
+    drawOption(opt,usr){
+        console.log(usr);
+        const iconOption = document.getElementById(usr);
+        //ajustar ruta
+        iconOption.style.backgroundImage=`url(public/img/${opt}.svg)`;
         //cambiar imagen segun personaje
     }
     //validar solo las 3 opciones no los main
@@ -114,7 +121,7 @@ class Player extends Character{
     constructor(){
         //llamado a el constructor clase padre
         super();
-        this.user = "ps1";
+        this.user = "main1";
         this.name = "jhon";
         this.maxPoint = 100;
     }
@@ -133,7 +140,7 @@ class Player extends Character{
 class Computer extends Character{
     constructor(){
         super();
-        this.user = "cup"
+        this.user = "main2"
         this.name = "Robot"
         this.maxPoint -= 30;
     }

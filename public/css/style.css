@@ -33,21 +33,21 @@ html body .container .mainHead .btnAction, html body .container .mainHead .btnAc
 }
 
 html body .container .mainHead .btnAction--rock {
-  background-image: url("../img/piedra.svg");
+  background-image: url("../img/rock.svg");
   background-position: 0 0;
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 html body .container .mainHead .btnAction--paper {
-  background-image: url("../img/papel.svg");
+  background-image: url("../img/paper.svg");
   background-position: 0 0;
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 html body .container .mainHead .btnAction--scissors {
-  background-image: url("../img/tijera.svg");
+  background-image: url("../img/scissors.svg");
   background-position: 0 0;
   background-repeat: no-repeat;
   background-size: contain;
