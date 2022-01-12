@@ -9,6 +9,7 @@ class Game{
     computer;
     ext = "ogg";
     aimGame = ["Empate","Ganas","Pierdes"];
+
     logicGame = [
         [0,1,2],
         [2,0,1],
@@ -29,14 +30,16 @@ class Game{
       shifts.innerText= resultAim;
 
       this.soundGame(resultAim);
-
-      return resultAim;
+// console.log(resultAim);
+      return result;
       
     }
-    soundGame(nameSound){
+    soundGame(nameSound, volume=0.70){
         //loser sound
         const music = new Audio( `public/sound/${nameSound}.${this.ext}`);   
+        music.volume = volume;
         let playPromise = music.play();
+       
         playPromise.then(()=>console.log(`play automatic`)).catch((error)=>console.log(`automatic fail ${error}`));  
     }
 
@@ -54,34 +57,47 @@ class Game{
        
     }
 
+    validatePoint(trnwin,poinps,pointcpu){
+        if(trnwin===1) this.player.totalPoint+=poinps;
+        else if(trnwin===2) this.player.totalPoint-=pointcpu;
+        else this.player.totalPoint+=0;
+        return this.player.totalPoint;
+    }
+
    
     doTurn(action){ 
             const playerAction = this.player.doAction(action);
             const computerAction = this.computer.doAction();
 
-            const [,optPlayer,] = playerAction;
-            const [,optComputer,] = computerAction;
+            const [,optPlayer,,pointPs] = playerAction;
+            const [,optComputer,,pointCPU] = computerAction;
 
-            console.log(playerAction, computerAction);
-            console.log(optPlayer, optComputer);
 
-            const turnWin = this.doTurnWin(optPlayer,optComputer);
-            console.log(turnWin);
+            let turnWin = this.doTurnWin(optPlayer,optComputer);
+        
 
-            const calpoint = this.player.calPoint(playerAction)
-            const calpoint2 = this.computer.calPoint(computerAction)
+           let resTurnWin = this.validatePoint(turnWin,pointPs,pointCPU)
+      
+
+
+            playerAction.push(turnWin,resTurnWin);
+           
+            const calpoint = this.player.calPoint(playerAction);
+            const calpoint2 = this.computer.calPoint(computerAction);
             this.endGame();
     }
 }
 
 class Character{
-    name;
+    
     randoMin= 0;
     randoMax= 0;
+    totalPoint = 0;
     basePoint = 0;
-    maxPoint = 100;
+    maxPoint = 0;
     name = "";
     user = "";
+    Bd =[0,0,0,0,0];
 
     actionType2 = {
         rock : 0,
@@ -90,16 +106,27 @@ class Character{
     }
 
     constructor(){  }
-    
-    calPoint([option,damage,user]){
-        this.basePoint = 0;
 
+    //QUE HACER CON LAS OPCIONES Y LOS PUNTOS
+    calPoint([option,idoption,user,point,turwin=null,returnwin=null]){
+
+        console.log(option,idoption,user,point,turwin,returnwin);
+ 
+        this.drawPoint(point,returnwin,user,turwin);
         this.drawOption(option,user);
     }
 
-    drawPoint(jugador) {
-        const lifebar = document.getElementById(id);
+    //PINTAR PUNTOS
+    drawPoint(ptn, rtrnwin,usr,twin) {
+        // console.log("a", pnt, usr);
+        const pointBar= document.getElementById(`total${usr}`);
+        pointBar.innerText= rtrnwin;
+        const PointSumBar = document.getElementById(`total${usr}Sum`);
+     
+        
+        // if(usr==="main1")  PointSumBar.innerText= `+ ${rtrnwin}`;     
     }
+
 
     drawOption(opt,usr){
         const iconOption = document.getElementById(usr);
@@ -107,8 +134,10 @@ class Character{
     }
  
 
-    doAttack(){
-        return this.basePoint;
+    doAttack(maxpoint){
+        
+        return this.basePoint=maxpoint;
+
     }
  
     randomAttack(min=0,max=0){
@@ -129,13 +158,16 @@ class Player extends Character{
         this.user = "main1";
         this.name = "jhon";
         this.basePoint = 0;
+        this.totalPoint = 0;
         this.maxPoint = 100;
     }
 
     doAction(action){
         // console.log(this.name+" "+action);
-        let amountPoint = this.actionType2[action];
-        return [action, amountPoint, this.user];
+        let idPoint = this.actionType2[action];
+        let resPoint = this.doAttack(this.maxPoint);
+        return [action, idPoint, this.user, resPoint];
+        //RETORNAR CUANTOS PUNTOS EQUIVALE ESA OPCION
     }
 
 }
@@ -143,18 +175,19 @@ class Player extends Character{
 class Computer extends Character{
     constructor(){
         super();
-        this.user = "main2"
-        this.name = "Robot"
+        this.user = "main2";
+        this.name = "Robot";
+        this.basePoint = 0;
+        this.totalPoint = 0;
         this.maxPoint = 30;
     }
     doAction(){
      
         const j = this.randomAttack(0,3); //validar valores negativos
-        let pointAttack = this.actionType2[j];
-        console.log(pointAttack);
-        let damage = 0;
-        damage =   this.doAttack( this.maxPoint);
-        return [j, pointAttack, this.user];
+        let idOption = this.actionType2[j];
+        // console.log(idOption);
+        let resPoint =   this.doAttack(this.maxPoint);
+        return [j, idOption, this.user, resPoint];
        
     }
 }
@@ -168,5 +201,5 @@ const game = new Game(player);
 const optionGame = document.getElementsByClassName("btnAction");
 Array.from(optionGame).forEach(el =>{ 
     el.addEventListener('click',() => game.doTurn(el.id));
-    el.addEventListener('mouseover',() => game.soundGame("Button"));
+    el.addEventListener('mouseover',() => game.soundGame("Button",0.09));
 });
