@@ -23,7 +23,7 @@ class Game{
 
     doTurnWin(actionplayer,actionComputer){
         //[fila=player ][Colum = CPU]
-      let result = this.logicGame[actionplayer][actionComputer];
+      let result = this.logicGame[actionComputer][actionplayer];
       let resultAim = this.aimGame[result];
 
       const shifts = document.getElementById("resultplayer");
@@ -60,7 +60,7 @@ class Game{
             this.shifts=10;
             this.player.totalPoint=0;
             this.soundGame("win");
-            
+
         }
        
         //add shifts view
@@ -71,6 +71,7 @@ class Game{
     }
 
     validatePoint(trnwin,poinps,pointcpu){
+
         if(trnwin===1) this.player.totalPoint+=poinps;
         else if(trnwin===2) this.player.totalPoint-=pointcpu;
         else this.player.totalPoint+=0;
@@ -123,7 +124,7 @@ class Character{
     //QUE HACER CON LAS OPCIONES Y LOS PUNTOS
     calPoint([option,idoption,user,point,turwin=null,returnwin=null]){
 
-        console.log(option,idoption,user,point,turwin,returnwin);
+        // console.log(option,idoption,user,point,turwin,returnwin);
  
         this.drawPoint(point,returnwin,user,turwin);
         this.drawOption(option,user);
@@ -221,3 +222,38 @@ Array.from(optionGame).forEach(el =>{
     el.addEventListener('mouseover',() => game.soundGame("Button",0.09));
 
 });
+
+
+//LOGIN
+
+
+class Auth{
+    password = "admin";
+    user= "admin";
+    isLoggedIn=false;
+    constructor(){
+
+    }
+    doLogin(password){
+        if(this.password === password) {this.isLoggedIn = true; console.log("ingreso");}
+        else {console.log("no ingreso");} ;
+    }
+
+
+}
+
+const auth = new Auth(player);
+
+const user = document.getElementById("user");
+const password = document.getElementById("password");
+const submit = document.getElementById("submit");
+submit.addEventListener('click',() =>{
+    let pass = password.value;
+    console.log(
+        pass
+    );
+    auth.doLogin(pass);
+    // Credenciales erroneas
+
+});
+

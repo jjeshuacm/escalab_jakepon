@@ -53,7 +53,23 @@ min-height: 100%;
     body{
         //include all style function
         @include funtionStyle(blue, 24px);
+            .containerLogin{
+                height: 500px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .login{
+                    text-align: center;
+                    width: 500px;
+                    outline: 1px solid red;
+                    .subTitle{
+                        font-size: 14px;
+                    }
+                }
+
+            }
             .container{
+                visibility: hidden;
                 outline: 1px solid red;
                 width: 100%;
                 display: grid;
@@ -95,15 +111,7 @@ min-height: 100%;
                         }
                     }
 
-                    //     display: flex;
-                    //     justify-content: center;
-                    //     align-items: center;
-                    // }
-                    // .main2{  
-                    //     display: flex;
-                    //     justify-content: center;
-                    //     align-items: center;
-                    // }   .main1{  
+         
                  
                         .btnOption{
                             display: inline-block;
