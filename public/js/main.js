@@ -8,22 +8,29 @@ class Game{
     player;
     computer;
     ext = "ogg";
-    aimGame = ["empatas","ganas","pierdes"];
+    aimGame = ["Empate","Ganas","Pierdes"];
     logicGame = [
         [0,1,2],
         [2,0,1],
         [1,2,0],
     ]
   
-    
     constructor(player){
         this.player = player;
         this.computer = new Computer;
     }
 
-    doTurnWin(actionComputer,actionplayer){
-        //[fila=CPU][Colum = Player]
-      let result = this.logicGame[actionComputer][actionplayer];
+    doTurnWin(actionplayer,actionComputer){
+        //[fila=player ][Colum = CPU]
+      let result = this.logicGame[actionplayer][actionComputer];
+      let resultAim = this.aimGame[result];
+
+      const shifts = document.getElementById("resultplayer");
+      shifts.innerText= resultAim;
+
+      this.soundGame(resultAim);
+
+      return resultAim;
       
     }
     soundGame(nameSound){
@@ -44,17 +51,22 @@ class Game{
         const shifts = document.getElementById("shifts");
         shifts.innerText= this.shifts;
 
-        this.soundGame("loser")
-
-         
+       
     }
 
    
     doTurn(action){ 
             const playerAction = this.player.doAction(action);
             const computerAction = this.computer.doAction();
-console.log(playerAction, computerAction);
-            const turnWin = this.doTurnWin();
+
+            const [,optPlayer,] = playerAction;
+            const [,optComputer,] = computerAction;
+
+            console.log(playerAction, computerAction);
+            console.log(optPlayer, optComputer);
+
+            const turnWin = this.doTurnWin(optPlayer,optComputer);
+            console.log(turnWin);
 
             const calpoint = this.player.calPoint(playerAction)
             const calpoint2 = this.computer.calPoint(computerAction)
@@ -154,4 +166,7 @@ const game = new Game(player);
 
 
 const optionGame = document.getElementsByClassName("btnAction");
-Array.from(optionGame).forEach(el => el.addEventListener('click',() => game.doTurn(el.id)));
+Array.from(optionGame).forEach(el =>{ 
+    el.addEventListener('click',() => game.doTurn(el.id));
+    el.addEventListener('mouseover',() => game.soundGame("Button"));
+});
