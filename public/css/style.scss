@@ -22,7 +22,7 @@
 //var
 $borde: 1px solid black;
 //var grid generic
-$grid-row:  auto 70px 390px 30px;
+$grid-row:  auto 70px 370px 30px;
 $grid-columns: 40% 40% auto;
 $grid-areas:'head head head'
             'mainHead  mainHead rightSide'
@@ -30,7 +30,7 @@ $grid-areas:'head head head'
             'footer footer footer';
 
 //var grid media query 
-$gridRow1200:   auto 70px 390px 50px 50px;  
+$gridRow1200:   auto 70px 200px 50px 50px;  
 $gridColumns1200: auto auto;
 $gridAreas1200:  'head head'
                 'mainHead mainHead'
@@ -132,6 +132,12 @@ min-height: 100%;
                 grid-template-columns: $gridColumns1200;
                 grid-template-rows: $gridRow1200;
                 grid-template-areas: $gridAreas1200;    
+            }
+            .poinregistre{
+                display: inline;
+                padding-left: 2px;
+                padding-right: 2px;
+                margin-top: 2px;
             }
         }
          //media query max 388

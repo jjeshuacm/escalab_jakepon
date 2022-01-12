@@ -18,8 +18,8 @@ html body .container {
       grid-template-areas: "head head head" "mainHead  mainHead rightSide" "main1 main2 rightSide" "footer footer footer";
   -ms-grid-columns: 40% 40% auto;
       grid-template-columns: 40% 40% auto;
-  -ms-grid-rows: auto 70px 390px 30px;
-      grid-template-rows: auto 70px 390px 30px;
+  -ms-grid-rows: auto 70px 370px 30px;
+      grid-template-rows: auto 70px 370px 30px;
 }
 
 html body .container div {
@@ -144,9 +144,15 @@ html body .container .footer {
   html body .container {
     -ms-grid-columns: auto auto;
         grid-template-columns: auto auto;
-    -ms-grid-rows: auto 70px 390px 50px 50px;
-        grid-template-rows: auto 70px 390px 50px 50px;
+    -ms-grid-rows: auto 70px 200px 50px 50px;
+        grid-template-rows: auto 70px 200px 50px 50px;
         grid-template-areas: "head head" "mainHead mainHead" "main1 main2" "rightSide rightSide" "footer footer";
+  }
+  html body .poinregistre {
+    display: inline;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-top: 2px;
   }
 }
 

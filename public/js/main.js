@@ -43,13 +43,26 @@ class Game{
         playPromise.then(()=>console.log(`play automatic`)).catch((error)=>console.log(`automatic fail ${error}`));  
     }
 
-    endGame(){
+    endGame(resturnwin){
       
         this.shifts -= 1; 
 
-        if(this.shifts ===0)alert("fin de turnos"); //guardar total de puntos 
-        else alert(this.shifts);
+        if(this.shifts ===0){
+            alert(`fin de turnos, puntos totales: ${resturnwin}`); 
+            const poinRegistre = document.getElementById(`rightSide`);
+           
+            let HTMLString = `<div class="poinregistre" id="poinregistre">${resturnwin}</div>`;
+            poinRegistre.innerHTML += HTMLString;
 
+           let liElements = document.querySelectorAll("div[id^='poinregistre']");
+           if (liElements.length > 5) { liElements[0].remove();}
+
+            this.shifts=10;
+            this.player.totalPoint=0;
+            this.soundGame("win");
+            
+        }
+       
         //add shifts view
         const shifts = document.getElementById("shifts");
         shifts.innerText= this.shifts;
@@ -84,7 +97,7 @@ class Game{
            
             const calpoint = this.player.calPoint(playerAction);
             const calpoint2 = this.computer.calPoint(computerAction);
-            this.endGame();
+            this.endGame(resTurnWin);
     }
 }
 
@@ -170,6 +183,10 @@ class Player extends Character{
         //RETORNAR CUANTOS PUNTOS EQUIVALE ESA OPCION
     }
 
+    recordPoint(){
+
+    }
+
 }
 
 class Computer extends Character{
@@ -202,4 +219,5 @@ const optionGame = document.getElementsByClassName("btnAction");
 Array.from(optionGame).forEach(el =>{ 
     el.addEventListener('click',() => game.doTurn(el.id));
     el.addEventListener('mouseover',() => game.soundGame("Button",0.09));
+
 });
