@@ -7,38 +7,43 @@ class Game{
     totalPoints= 0;
     player;
     computer;
+    ext = "ogg";
+  
     
     constructor(player){
         this.player = player;
         this.computer = new Computer;
     }
-    endGame(){
-        //total de puntos generados despues de los 10 turnos.
-          this.shifts -= 1;
-          if(this.shifts ===0)alert("fin de turnos"); //guardar total de puntos 
-          else alert(this.shifts);
-
-        // if (this.shifts.getLife() === 0) alert('perdiste');
-        // else if (this.shifts.getLife() === 0) alert('ganaste');
+    soundGame(nameSound){
+        //loser sound
+        const music = new Audio( `public/sound/${nameSound}.${this.ext}`);   
+        let playPromise = music.play();
+        playPromise.then(()=>console.log(`play automatic`)).catch((error)=>console.log(`automatic fail ${error}`));  
     }
-    //turnos del juego 
+    endGame(){
+      
+        this.shifts -= 1;
+
+        if(this.shifts ===0)alert("fin de turnos"); //guardar total de puntos 
+        else alert(this.shifts);
+
+        //add shifts view
+        const shifts = document.getElementById("shifts");
+        shifts.innerText= this.shifts;
+        this.soundGame("loser")
+       
+        
+    }
+   
     doTurn(action){ 
-            //ejecutar accion del jugador
             const playerAction = this.player.doAction(action);
-            //ejecutar accion del enemigo
             const computerAction = this.computer.doAction();
-            
-            //opciones 
             const calpoint = this.player.calPoint(playerAction)
             const calpoint2 = this.computer.calPoint(computerAction)
-            //revisar cantidad de turnos
             this.endGame();
-     
-
     }
-
 }
-//mas opciones //elepcion random entre un inicio y un fin //al momento de definir un jugador //si la elige un ataque ramdom
+
 class Character{
     name;
     randoMin= 0;
@@ -47,71 +52,40 @@ class Character{
     maxPoint = 100;
     name = "";
     user = "";
-    //envio de las opciones dinamicas?
-    // actionType = ['rock','paper','scissors'];
-    //valores defectos de cada opcion
+
     actionType2 = {
         rock : 100,
         paper: 20,
         scissors: 40,
     }
 
-    constructor(){ 
-
-        // modificar propiedades heredadas 
-        // recibir y modificar sus propios parametros al instanciar 
-    }
-    //calcular
+    constructor(){  }
+    
     calPoint([option,damage,user]){
-        console.log(option,damage,user);
-//pintar()
-        // this.drawPoint(option,user);
         this.drawOption(option,user);
     }
-//pintar
+
     drawPoint(jugador) {
         const lifebar = document.getElementById(id);
-        // lifebar.style.width = `${(this.life / this.maxLife) * 100}%`;
     }
 
     drawOption(opt,usr){
-        console.log(usr);
         const iconOption = document.getElementById(usr);
-        //ajustar ruta
         iconOption.style.backgroundImage=`url(public/img/${opt}.svg)`;
-        //cambiar imagen segun personaje
     }
-    //validar solo las 3 opciones no los main
+ 
 
     doAttack(){
         return this.basePoint;
     }
-    //atack alatorio para los dos. solo activado para enemigo
-    //max default debe ser el total de array -1
+ 
     randomAttack(min=0,max=0){
         this.randoMin = min;
-
         const objectSize = Object.keys(this.actionType2).length;
-   
-        //retornar que se ha elegido un valor al maximo de opciones si max > length
-        // this.randoMax = max > this.actionType.length ? this.actionType.length : max;
         this.randoMax = max > objectSize.length ? objectSize.length : max;
-       
-        console.log( this.randoMin,  this.randoMax);
-        //contar total de datos en actiontype
-         // Retorna un entero aleatorio entre min (incluido) y max (excluido)
         const j =  Math.floor(Math.random() * (this.randoMax - this.randoMin)+ this.randoMin);
-        // console.log(j);
-        //randomOptionSelected
-        
-        
-        //convertir objecto en array para aplicar filter
         const propertyNames = Object.keys(this.actionType2);
-        // console.log(propertyNames);
-        // console.log(j);
-        // let found = propertyNames.find(e => e.name === j);
         let action = propertyNames[j];
-        // console.log(action);
         return action;
     }
 }
@@ -119,7 +93,6 @@ class Character{
 class Player extends Character{
    
     constructor(){
-        //llamado a el constructor clase padre
         super();
         this.user = "main1";
         this.name = "jhon";
@@ -129,10 +102,7 @@ class Player extends Character{
     doAction(action){
         console.log(this.name+" "+action);
         let amountPoint = this.actionType2[action];
-
         return [action, amountPoint, this.user];
-        // let main1Option = this.drawOption(this.user);
-        // return amountPoint;
     }
 
 }
@@ -145,27 +115,13 @@ class Computer extends Character{
         this.maxPoint -= 30;
     }
     doAction(){
-        //obtener valores alatorios entre inicio y fin : si cambian la cantidad de elementos.
-        //optener las opciones del padre
-        //elegir una al azar
+     
         const j = this.randomAttack(0,3); //validar valores negativos
-        //puntos por cada opcion configurables segun la elegida
-        //enviar valor a restar para cada opcion dinamica
-        //filter? buscar en array
-        // console.log(j);
         let pointAttack = this.actionType2[j];
         console.log(pointAttack);
         let damage = 0;
         damage =   this.doAttack( this.maxPoint);
-        // let main1Option = this.drawOption(this.user);
-
         return [j, damage, this.user];
-        // return damage;
-        // console.log(pointAttack);
-      
-        //    if (action === 'heal' && this.life === this.maxLife) action = 'strong';
-     
-
        
     }
 }
@@ -173,21 +129,8 @@ class Computer extends Character{
 
 
 const player = new Player();
-//iniciar juego 
 const game = new Game(player);
 
 
-
-//Convertir htmlCollection en array. 
-    //Recorrer elementos de array con foreach.
-        //Añadir Evento click a cada elemento del foreach
-            //llamado a la instancia de clase y al metodo doTurn
-
-        //  Array.from(optionGame).forEach((el)=>{
-        //         el.addEventListener('click', ()=>{
-        //             console.log(el.id);
-        //             })
-        //     });
-//validar si no se ha enviado nada en el elmento?
 const optionGame = document.getElementsByClassName("btnAction");
 Array.from(optionGame).forEach(el => el.addEventListener('click',() => game.doTurn(el.id)));

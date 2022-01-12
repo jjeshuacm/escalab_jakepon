@@ -22,7 +22,7 @@
 //var
 $borde: 1px solid black;
 //var grid generic
-$grid-row:  40px 70px 390px 30px;
+$grid-row:  auto 70px 390px 30px;
 $grid-columns: 40% 40% auto;
 $grid-areas:'head head head'
             'mainHead  mainHead rightSide'
@@ -30,7 +30,7 @@ $grid-areas:'head head head'
             'footer footer footer';
 
 //var grid media query 
-$gridRow1200:   50px 70px 390px 50px 50px;  
+$gridRow1200:   auto 70px 390px 50px 50px;  
 $gridColumns1200: auto auto;
 $gridAreas1200:  'head head'
                 'mainHead mainHead'
@@ -62,6 +62,13 @@ min-height: 100%;
                 grid-template-rows: $grid-row;
 
                     div{  border: $borde; }
+                    .head{
+                        .shifts{
+                            display: inline;
+                            float: right;
+                            text-align: right; 
+                        }
+                    }
                     //mainHead
                     //action btn Rock-paper-scissors
                     .mainHead{
@@ -70,6 +77,7 @@ min-height: 100%;
                             display: inline-block;
                             height: 100%;
                             width: 70px;
+                           
                             //extend css 
                             //add css from btnaction to --rock
                             &--rock {  @extend .btnAction; @include background($rockImg);}
@@ -77,6 +85,13 @@ min-height: 100%;
                             &--scissors { @extend .btnAction; @include background($scissorsImg); }
                             &--main1 { @extend .btnAction; @include background($main1Img);}
                             &--main2 { @extend .btnAction; @include background($main2Img);float: right;}
+                        }
+
+                     
+                        .btnAction:hover {
+                            cursor: pointer;
+                            // opacity: 0.5;
+                            filter: brightness(80%);
                         }
                     }
 

@@ -18,12 +18,18 @@ html body .container {
       grid-template-areas: "head head head" "mainHead  mainHead rightSide" "main1 main2 rightSide" "footer footer footer";
   -ms-grid-columns: 40% 40% auto;
       grid-template-columns: 40% 40% auto;
-  -ms-grid-rows: 40px 70px 390px 30px;
-      grid-template-rows: 40px 70px 390px 30px;
+  -ms-grid-rows: auto 70px 390px 30px;
+      grid-template-rows: auto 70px 390px 30px;
 }
 
 html body .container div {
   border: 1px solid black;
+}
+
+html body .container .head .shifts {
+  display: inline;
+  float: right;
+  text-align: right;
 }
 
 html body .container .mainHead .btnAction, html body .container .mainHead .btnAction--rock, html body .container .mainHead .btnAction--paper, html body .container .mainHead .btnAction--scissors, html body .container .mainHead .btnAction--main1, html body .container .mainHead .btnAction--main2 {
@@ -66,6 +72,12 @@ html body .container .mainHead .btnAction--main2 {
   background-repeat: no-repeat;
   background-size: contain;
   float: right;
+}
+
+html body .container .mainHead .btnAction:hover, html body .container .mainHead .btnAction--rock:hover, html body .container .mainHead .btnAction--paper:hover, html body .container .mainHead .btnAction--scissors:hover, html body .container .mainHead .btnAction--main1:hover, html body .container .mainHead .btnAction--main2:hover {
+  cursor: pointer;
+  -webkit-filter: brightness(80%);
+          filter: brightness(80%);
 }
 
 html body .container .btnOption, html body .container .btnOption--main1, html body .container .btnOption--main2 {
@@ -132,8 +144,8 @@ html body .container .footer {
   html body .container {
     -ms-grid-columns: auto auto;
         grid-template-columns: auto auto;
-    -ms-grid-rows: 50px 70px 390px 50px 50px;
-        grid-template-rows: 50px 70px 390px 50px 50px;
+    -ms-grid-rows: auto 70px 390px 50px 50px;
+        grid-template-rows: auto 70px 390px 50px 50px;
         grid-template-areas: "head head" "mainHead mainHead" "main1 main2" "rightSide rightSide" "footer footer";
   }
 }
