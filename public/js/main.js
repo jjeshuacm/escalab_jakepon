@@ -8,11 +8,23 @@ class Game{
     player;
     computer;
     ext = "ogg";
+    aimGame = ["empatas","ganas","pierdes"];
+    logicGame = [
+        [0,1,2],
+        [2,0,1],
+        [1,2,0],
+    ]
   
     
     constructor(player){
         this.player = player;
         this.computer = new Computer;
+    }
+
+    doTurnWin(actionComputer,actionplayer){
+        //[fila=CPU][Colum = Player]
+      let result = this.logicGame[actionComputer][actionplayer];
+      
     }
     soundGame(nameSound){
         //loser sound
@@ -20,9 +32,10 @@ class Game{
         let playPromise = music.play();
         playPromise.then(()=>console.log(`play automatic`)).catch((error)=>console.log(`automatic fail ${error}`));  
     }
+
     endGame(){
       
-        this.shifts -= 1;
+        this.shifts -= 1; 
 
         if(this.shifts ===0)alert("fin de turnos"); //guardar total de puntos 
         else alert(this.shifts);
@@ -30,14 +43,19 @@ class Game{
         //add shifts view
         const shifts = document.getElementById("shifts");
         shifts.innerText= this.shifts;
+
         this.soundGame("loser")
-       
-        
+
+         
     }
+
    
     doTurn(action){ 
             const playerAction = this.player.doAction(action);
             const computerAction = this.computer.doAction();
+console.log(playerAction, computerAction);
+            const turnWin = this.doTurnWin();
+
             const calpoint = this.player.calPoint(playerAction)
             const calpoint2 = this.computer.calPoint(computerAction)
             this.endGame();
@@ -54,14 +72,16 @@ class Character{
     user = "";
 
     actionType2 = {
-        rock : 100,
-        paper: 20,
-        scissors: 40,
+        rock : 0,
+        paper: 1,
+        scissors: 2,
     }
 
     constructor(){  }
     
     calPoint([option,damage,user]){
+        this.basePoint = 0;
+
         this.drawOption(option,user);
     }
 
@@ -96,11 +116,12 @@ class Player extends Character{
         super();
         this.user = "main1";
         this.name = "jhon";
+        this.basePoint = 0;
         this.maxPoint = 100;
     }
 
     doAction(action){
-        console.log(this.name+" "+action);
+        // console.log(this.name+" "+action);
         let amountPoint = this.actionType2[action];
         return [action, amountPoint, this.user];
     }
@@ -112,7 +133,7 @@ class Computer extends Character{
         super();
         this.user = "main2"
         this.name = "Robot"
-        this.maxPoint -= 30;
+        this.maxPoint = 30;
     }
     doAction(){
      
@@ -121,7 +142,7 @@ class Computer extends Character{
         console.log(pointAttack);
         let damage = 0;
         damage =   this.doAttack( this.maxPoint);
-        return [j, damage, this.user];
+        return [j, pointAttack, this.user];
        
     }
 }
