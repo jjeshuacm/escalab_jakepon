@@ -47,15 +47,20 @@ class Game{
             let HTMLString = `<div class="poinregistre" id="poinregistre">${resturnwin}</div>`;
             poinRegistre.innerHTML += HTMLString;
 
-            localStorage.point(resturnwin);
-
+             
+            this.player.bd.push(resturnwin);
+                
             let liElements = document.querySelectorAll("div[id^='poinregistre']");
+            console.log(liElements.length);
             if (liElements.length > 5) { 
-                liElements[0].remove();
 
-                localStorage.removeItem(point)
+                liElements[0].remove();
+                this.player.bd.shift();
             
             }
+            console.log(this.player.bd);
+
+            localStorage.point = JSON.stringify(this.player.bd);
 
             this.shifts=10;
             this.player.totalPoint=0;
@@ -106,7 +111,7 @@ class Character{
     maxPoint = 0;
     name = "";
     user = "";
-    Bd =[0,0,0,0,0];
+    bd =[];
     actionType2 = { rock : 0, paper: 1, scissors: 2,}
 
     constructor(){  }
@@ -239,12 +244,36 @@ const auth = new Auth(player);
 const user = document.getElementById("user");
 const password = document.getElementById("password");
 const submit = document.getElementById("submit");
+
+
+const poinRegistre = document.getElementById(`rightSide`); 
+
+
+
+
+
+
 submit.addEventListener('click',() =>{
 
     // if(!auth.isLoggedIn) {console.log("no hay sesion"); return}
 
-
+    
     auth.doLogin(password.value, user.value);
+
+    const arr = localStorage.point;
+        console.log(arr);
+        if(arr!=undefined){
+            let arrStorage =  JSON.parse(arr); 
+            if (arrStorage.length > 0 ) {
+                arrStorage.forEach((element)  => {
+                    let HTMLString = `<div class="poinregistre" id="poinregistre">${element}</div>`;
+                    poinRegistre.innerHTML += HTMLString;
+                });
+            }
+        }
+ 
+    
+
     // Credenciales erroneas
 
 });
