@@ -60,6 +60,16 @@ class Game{
             }
             console.log(this.player.bd);
 
+            //logica localstorage cuando valores son diferentes. 
+            const arr = localStorage.point;
+            if(arr!=undefined){
+                let arrStorage =  JSON.parse(arr); 
+                if (arrStorage.length > 0 ) {
+                    console.log("s");
+                }
+            }
+
+
             localStorage.point = JSON.stringify(this.player.bd);
 
             this.shifts=10;
