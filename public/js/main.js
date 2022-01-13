@@ -47,8 +47,18 @@ class Game{
             let HTMLString = `<div class="poinregistre" id="poinregistre">${resturnwin}</div>`;
             poinRegistre.innerHTML += HTMLString;
 
-             
+
+            //  logica localstorage cuando valores son diferentes. 
+            // const arr = localStorage.point;
+            // if(arr!=undefined){
+            //     let arrStorage =  JSON.parse(arr); 
+            //     if (arrStorage.length > 0 ) {  
+            //         this.player.bd.push(arrStorage,resturnwin);
+            //     }
+            // }
+ 
             this.player.bd.push(resturnwin);
+           
                 
             let liElements = document.querySelectorAll("div[id^='poinregistre']");
             console.log(liElements.length);
@@ -60,15 +70,7 @@ class Game{
             }
             console.log(this.player.bd);
 
-            //logica localstorage cuando valores son diferentes. 
-            const arr = localStorage.point;
-            if(arr!=undefined){
-                let arrStorage =  JSON.parse(arr); 
-                if (arrStorage.length > 0 ) {
-                    console.log("s");
-                }
-            }
-
+           
 
             localStorage.point = JSON.stringify(this.player.bd);
 
