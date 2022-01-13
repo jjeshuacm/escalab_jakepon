@@ -20,7 +20,7 @@
 }
 
 //var
-$borde: 1px solid black;
+$borde: 0.5px solid #d7d7d7;
 //var grid generic
 $grid-row:  auto 70px 370px 30px;
 $grid-columns: 40% 40% auto;
@@ -72,7 +72,8 @@ min-height: 100%;
                 visibility: hidden;
                 outline: 1px solid red;
                 width: 100%;
-                display: grid;
+                // display: grid;
+                display: none;
                 grid-template-areas: $grid-areas;
                 grid-template-columns: $grid-columns;
                 grid-template-rows: $grid-row;

@@ -37,8 +37,7 @@ html body .container {
   visibility: hidden;
   outline: 1px solid red;
   width: 100%;
-  display: -ms-grid;
-  display: grid;
+  display: none;
       grid-template-areas: "head head head" "mainHead  mainHead rightSide" "main1 main2 rightSide" "footer footer footer";
   -ms-grid-columns: 40% 40% auto;
       grid-template-columns: 40% 40% auto;
@@ -47,7 +46,7 @@ html body .container {
 }
 
 html body .container div {
-  border: 1px solid black;
+  border: 0.5px solid #d7d7d7;
 }
 
 html body .container .head .shifts {

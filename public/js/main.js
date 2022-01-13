@@ -9,12 +9,7 @@ class Game{
     computer;
     ext = "ogg";
     aimGame = ["Empate","Ganas","Pierdes"];
-
-    logicGame = [
-        [0,1,2],
-        [2,0,1],
-        [1,2,0],
-    ]
+    logicGame = [[0,1,2],[2,0,1],[1,2,0]];
   
     constructor(player){
         this.player = player;
@@ -25,21 +20,19 @@ class Game{
         //[fila=player ][Colum = CPU]
       let result = this.logicGame[actionComputer][actionplayer];
       let resultAim = this.aimGame[result];
+      let shifts = document.getElementById("resultplayer");
 
-      const shifts = document.getElementById("resultplayer");
       shifts.innerText= resultAim;
 
       this.soundGame(resultAim);
-// console.log(resultAim);
+
       return result;
       
     }
     soundGame(nameSound, volume=0.70){
-        //loser sound
         const music = new Audio( `public/sound/${nameSound}.${this.ext}`);   
         music.volume = volume;
-        let playPromise = music.play();
-       
+        const playPromise = music.play();
         playPromise.then(()=>console.log(`play automatic`)).catch((error)=>console.log(`automatic fail ${error}`));  
     }
 
@@ -54,8 +47,15 @@ class Game{
             let HTMLString = `<div class="poinregistre" id="poinregistre">${resturnwin}</div>`;
             poinRegistre.innerHTML += HTMLString;
 
-           let liElements = document.querySelectorAll("div[id^='poinregistre']");
-           if (liElements.length > 5) { liElements[0].remove();}
+            localStorage.point(resturnwin);
+
+            let liElements = document.querySelectorAll("div[id^='poinregistre']");
+            if (liElements.length > 5) { 
+                liElements[0].remove();
+
+                localStorage.removeItem(point)
+            
+            }
 
             this.shifts=10;
             this.player.totalPoint=0;
@@ -63,11 +63,9 @@ class Game{
 
         }
        
-        //add shifts view
         const shifts = document.getElementById("shifts");
         shifts.innerText= this.shifts;
 
-       
     }
 
     validatePoint(trnwin,poinps,pointcpu){
@@ -86,15 +84,12 @@ class Game{
             const [,optPlayer,,pointPs] = playerAction;
             const [,optComputer,,pointCPU] = computerAction;
 
-
             let turnWin = this.doTurnWin(optPlayer,optComputer);
         
-
-           let resTurnWin = this.validatePoint(turnWin,pointPs,pointCPU)
+            let resTurnWin = this.validatePoint(turnWin,pointPs,pointCPU)
       
-
-
             playerAction.push(turnWin,resTurnWin);
+      
            
             const calpoint = this.player.calPoint(playerAction);
             const calpoint2 = this.computer.calPoint(computerAction);
@@ -112,33 +107,22 @@ class Character{
     name = "";
     user = "";
     Bd =[0,0,0,0,0];
-
-    actionType2 = {
-        rock : 0,
-        paper: 1,
-        scissors: 2,
-    }
+    actionType2 = { rock : 0, paper: 1, scissors: 2,}
 
     constructor(){  }
 
-    //QUE HACER CON LAS OPCIONES Y LOS PUNTOS
     calPoint([option,idoption,user,point,turwin=null,returnwin=null]){
 
-        // console.log(option,idoption,user,point,turwin,returnwin);
- 
         this.drawPoint(point,returnwin,user,turwin);
         this.drawOption(option,user);
     }
 
-    //PINTAR PUNTOS
+
     drawPoint(ptn, rtrnwin,usr,twin) {
-        // console.log("a", pnt, usr);
+
         const pointBar= document.getElementById(`total${usr}`);
         pointBar.innerText= rtrnwin;
-        const PointSumBar = document.getElementById(`total${usr}Sum`);
-     
-        
-        // if(usr==="main1")  PointSumBar.innerText= `+ ${rtrnwin}`;     
+        const PointSumBar = document.getElementById(`total${usr}Sum`);   
     }
 
 
@@ -149,9 +133,7 @@ class Character{
  
 
     doAttack(maxpoint){
-        
         return this.basePoint=maxpoint;
-
     }
  
     randomAttack(min=0,max=0){
@@ -177,16 +159,12 @@ class Player extends Character{
     }
 
     doAction(action){
-        // console.log(this.name+" "+action);
         let idPoint = this.actionType2[action];
         let resPoint = this.doAttack(this.maxPoint);
         return [action, idPoint, this.user, resPoint];
-        //RETORNAR CUANTOS PUNTOS EQUIVALE ESA OPCION
     }
 
-    recordPoint(){
-
-    }
+    recordPoint(){ }
 
 }
 
@@ -203,7 +181,6 @@ class Computer extends Character{
      
         const j = this.randomAttack(0,3); //validar valores negativos
         let idOption = this.actionType2[j];
-        // console.log(idOption);
         let resPoint =   this.doAttack(this.maxPoint);
         return [j, idOption, this.user, resPoint];
        
@@ -220,7 +197,6 @@ const optionGame = document.getElementsByClassName("btnAction");
 Array.from(optionGame).forEach(el =>{ 
     el.addEventListener('click',() => game.doTurn(el.id));
     el.addEventListener('mouseover',() => game.soundGame("Button",0.09));
-
 });
 
 
@@ -231,12 +207,28 @@ class Auth{
     password = "admin";
     user= "admin";
     isLoggedIn=false;
-    constructor(){
+    constructor(){}
+    doLogin(password, user){
+        
+        const containerLogin = document.getElementById("containerLogin");
+        const container = document.getElementById("container");
 
-    }
-    doLogin(password){
-        if(this.password === password) {this.isLoggedIn = true; console.log("ingreso");}
-        else {console.log("no ingreso");} ;
+        if(this.password === password && this.user === user) {
+            this.isLoggedIn = true; 
+       
+            containerLogin.style.visibility=`hidden`;
+            containerLogin.style.display=`none`;
+            container.style.visibility=`visible`;
+            container.style.display=`grid`;
+            console.log("ingreso");
+        }else {
+            container.style.visibility=`hidden`;
+            container.style.display=`none`;
+            containerLogin.style.visibility=`visible`;
+            containerLogin.style.display=`flex`;
+            
+            console.log("no ingreso");
+        } 
     }
 
 
@@ -248,11 +240,11 @@ const user = document.getElementById("user");
 const password = document.getElementById("password");
 const submit = document.getElementById("submit");
 submit.addEventListener('click',() =>{
-    let pass = password.value;
-    console.log(
-        pass
-    );
-    auth.doLogin(pass);
+
+    // if(!auth.isLoggedIn) {console.log("no hay sesion"); return}
+
+
+    auth.doLogin(password.value, user.value);
     // Credenciales erroneas
 
 });
